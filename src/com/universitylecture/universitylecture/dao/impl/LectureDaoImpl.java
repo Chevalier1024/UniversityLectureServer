@@ -16,7 +16,7 @@ import com.universitylecture.universitylecture.util.DBUtil;
 
 public class LectureDaoImpl implements LectureDao{
 
-	public ArrayList<Lecture> select(String dateTime, String institute) {
+	public ArrayList<Lecture> select(String dateTime, String institute,int counter) {
 		
 		String day = "";
 		
@@ -27,15 +27,16 @@ public class LectureDaoImpl implements LectureDao{
 			case "三天之内": day = "3";break;
 			case "五天之内": day = "5";break;
 			case "七天之内": day = "7";break;
-			default: day = "100";break;
+			default: day = 10 + "";break;
 		}
 		
 		String sql = "";
 		if(institute.equals("不限"))
-			sql = "select * from lecture where dateTime between now() and DATE_ADD(now(), INTERVAL " + day + " DAY)";
+			sql = "select * from lecture where dateTime between now() and DATE_ADD(now(), INTERVAL " 
+					+ day + " DAY) order by datetime DESC limit "+(counter - 5) + "," + counter;
 		else 
 			sql = "select * from lecture where dateTime between now() and DATE_ADD(now(), INTERVAL " + day + " DAY)"
-					+ " and institute = ?";
+					+ " and institute = ? order by datetime DESC limit "+(counter - 5) + "," + counter;
 		
 		
 		//实例化数据库连接工具，获得连接，准备PreparedStatement和结果集
@@ -110,8 +111,7 @@ public class LectureDaoImpl implements LectureDao{
 	
 	public User isLecturePublisher(User user) {
 		
-		String sql = "select * from lecture_publisher "
-				+ "where phoneNumber = ?";
+		String sql = "select * from lecture_publisher where phoneNumber = ?";
 		
 		//实例化数据库连接工具，获得连接，准备PreparedStatement和结果集
 		DBUtil util = new DBUtil();

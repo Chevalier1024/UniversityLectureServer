@@ -1,6 +1,7 @@
-package com.universitylecture.universitylecture.servlet;
+﻿package com.universitylecture.universitylecture.servlet;
 
 import java.io.File;
+
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -45,51 +46,51 @@ public class UploadImageServlet extends HttpServlet{
 	public void doPost(HttpServletRequest request, HttpServletResponse response)
 				throws ServletException,IOException {
 		request.setCharacterEncoding("utf-8");  
-        //获得磁盘文件条目工厂。  
+        //鑾峰緱纾佺洏鏂囦欢鏉＄洰宸ュ巶銆�  
         DiskFileItemFactory factory = new DiskFileItemFactory();  
         
-        //获取文件上传需要保存的路径，upload文件夹需存在。  
+        //鑾峰彇鏂囦欢涓婁紶闇�瑕佷繚瀛樼殑璺緞锛寀pload鏂囦欢澶归渶瀛樺湪銆�  
         String path = request.getSession().getServletContext().getRealPath("/image");  
 
         
         File directory = new File(path);
-	      //如果文件夹不存在则创建    
+	      //濡傛灉鏂囦欢澶逛笉瀛樺湪鍒欏垱寤�    
 	      if  (!directory .exists()  && !directory .isDirectory())      
 	      {       
-	          System.out.println("//不存在");  
+	          System.out.println("//涓嶅瓨鍦�");  
 	          directory .mkdir();    
 	      } else   
 	      {  
-	          System.out.println("//目录存在");  
+	          System.out.println("//鐩綍瀛樺湪");  
 	      }  
         
         
        
-        //设置暂时存放文件的存储室，这个存储室可以和最终存储文件的文件夹不同。因为当文件很大的话会占用过多内存所以设置存储室。  
+        //璁剧疆鏆傛椂瀛樻斁鏂囦欢鐨勫瓨鍌ㄥ锛岃繖涓瓨鍌ㄥ鍙互鍜屾渶缁堝瓨鍌ㄦ枃浠剁殑鏂囦欢澶逛笉鍚屻�傚洜涓哄綋鏂囦欢寰堝ぇ鐨勮瘽浼氬崰鐢ㄨ繃澶氬唴瀛樻墍浠ヨ缃瓨鍌ㄥ銆�  
         factory.setRepository(new File(path));  
-        //设置缓存的大小，当上传文件的容量超过缓存时，就放到暂时存储室。  
+        //璁剧疆缂撳瓨鐨勫ぇ灏忥紝褰撲笂浼犳枃浠剁殑瀹归噺瓒呰繃缂撳瓨鏃讹紝灏辨斁鍒版殏鏃跺瓨鍌ㄥ銆�  
         factory.setSizeThreshold(1024*1024);  
-        //上传处理工具类（高水平API上传处理？）  
+        //涓婁紶澶勭悊宸ュ叿绫伙紙楂樻按骞矨PI涓婁紶澶勭悊锛燂級  
         ServletFileUpload upload = new ServletFileUpload(factory);  
           
         try{  
-            //调用 parseRequest（request）方法  获得上传文件 FileItem 的集合list 可实现多文件上传。  
+            //璋冪敤 parseRequest锛坮equest锛夋柟娉�  鑾峰緱涓婁紶鏂囦欢 FileItem 鐨勯泦鍚坙ist 鍙疄鐜板鏂囦欢涓婁紶銆�  
             List<FileItem> list = upload.parseRequest(request);  
             for(FileItem item:list){  
-                //获取表单属性名字。  
+                //鑾峰彇琛ㄥ崟灞炴�у悕瀛椼��  
                 String name = item.getFieldName();  
                 
                 
                 
-                //如果获取的表单信息是普通的文本信息。即通过页面表单形式传递来的字符串。  
+                //濡傛灉鑾峰彇鐨勮〃鍗曚俊鎭槸鏅�氱殑鏂囨湰淇℃伅銆傚嵆閫氳繃椤甸潰琛ㄥ崟褰㈠紡浼犻�掓潵鐨勫瓧绗︿覆銆�  
                 if(item.isFormField()){  
-                    //获取用户具体输入的字符串，  
+                    //鑾峰彇鐢ㄦ埛鍏蜂綋杈撳叆鐨勫瓧绗︿覆锛�  
                     String value = item.getString();  
                     request.setAttribute(name, value);  
                 }  
-                //如果传入的是非简单字符串，而是图片，音频，视频等二进制文件。  
+                //濡傛灉浼犲叆鐨勬槸闈炵畝鍗曞瓧绗︿覆锛岃�屾槸鍥剧墖锛岄煶棰戯紝瑙嗛绛変簩杩涘埗鏂囦欢銆�  
                 else{   
-                    //获取路径名  
+                    //鑾峰彇璺緞鍚�  
                     String value = item.getName();
                     String[] nameList = value.split("\\.");
                     String typeName = nameList[nameList.length-1];

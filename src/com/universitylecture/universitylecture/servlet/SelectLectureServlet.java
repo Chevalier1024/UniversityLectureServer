@@ -51,7 +51,7 @@ public class SelectLectureServlet extends HttpServlet{
 		
 		//实例化数据访问对象
 		LectureDao lectureDao = new LectureDaoImpl();
-		ArrayList<Lecture> lectures = lectureDao.select(returnLecture.getTime(), returnLecture.getInstitute());
+		ArrayList<Lecture> lectures = lectureDao.select(returnLecture.getTime(), returnLecture.getInstitute(),returnLecture.getCounter());
 		
 		response.setContentType("application/x-java-serialized-object");
 		OutputStream os = response.getOutputStream();

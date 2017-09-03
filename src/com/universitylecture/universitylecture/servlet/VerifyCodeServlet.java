@@ -58,7 +58,7 @@ public class VerifyCodeServlet extends HttpServlet{
 	public void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException,IOException {
 		
-		String appkey = "1e81bc5f2c43f";
+		String appkey = "1e81bc5f2c43f	";
 		String zone = "86";
 		String address = "https://webapi.sms.mob.com/sms/verify";
 		MobClient client = null;

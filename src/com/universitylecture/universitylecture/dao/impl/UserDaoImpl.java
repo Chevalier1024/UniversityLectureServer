@@ -19,8 +19,7 @@ public class UserDaoImpl implements UserDao{
 	 * 
 	 */
 	public User login(String phoneNumber, String password) {
-		String sql = "select * from user "
-				+ "where phoneNumber = ? and password = ?";
+		String sql = "select * from user where phoneNumber = ? and password = ?";
 		
 		//实例化数据库连接工具，获得连接，准备PreparedStatement和结果集
 		DBUtil util = new DBUtil();
