@@ -8,7 +8,7 @@ import com.universitylecture.universitylecture.pojo.User;
 
 public interface LectureDao {
 	
-	public ArrayList<Lecture> select(String dateTime,String institue);
+	public ArrayList<Lecture> select(String dateTime,String institue,int counter);
 	
 	public ArrayList<Lecture> selectByID(String ID);
 	
