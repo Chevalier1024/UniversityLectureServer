@@ -19,7 +19,7 @@ public class UserDaoImpl implements UserDao{
 	 * 
 	 */
 	public User login(String phoneNumber, String password) {
-		String sql = "select * from user where phoneNumber = ? and password = ?";
+		String sql = "select * from user where phone_number = ? and password = ?";
 		
 		//实例化数据库连接工具，获得连接，准备PreparedStatement和结果集
 		DBUtil util = new DBUtil();
@@ -73,7 +73,7 @@ public class UserDaoImpl implements UserDao{
 	
 	public User register(String name,String studentNumber,String password,String sex,String phoneNumber) {
 		
-		String sql = "insert into user(name,studentNumber,password,sex,phoneNumber)  values (?,?,?,?,?)";
+		String sql = "insert into user(name,student_number,password,sex,phone_number)  values (?,?,?,?,?)";
 		
 		//实例化数据库连接工具，获得连接，准备PreparedStatement和结果集
 		DBUtil util = new DBUtil();
@@ -120,7 +120,7 @@ public class UserDaoImpl implements UserDao{
 	
 	public User updateUser(User user) {
 
-		String sql = "update user SET sex = ?,name = ?,phoneNumber = ? where studentNumber = ? ";
+		String sql = "update user SET sex = ?,name = ?,phone_number = ? where student_number = ? ";
 		
 		//实例化数据库连接工具，获得连接，准备PreparedStatement和结果集
 		DBUtil util = new DBUtil();

@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import com.universitylecture.universitylecture.pojo.Lecture;
 import com.universitylecture.universitylecture.pojo.LecturePublisher;
+import com.universitylecture.universitylecture.pojo.MyLecture;
 import com.universitylecture.universitylecture.pojo.User;
 
 public interface LectureDao {
@@ -15,4 +16,6 @@ public interface LectureDao {
 	public Lecture add(Lecture lecture);
 	
 	public User isLecturePublisher(User user);
+	
+	public MyLecture insertMyLecture(String userID,String lectureID);
 }

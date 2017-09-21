@@ -11,8 +11,10 @@ import java.util.Date;
 import com.universitylecture.universitylecture.dao.LectureDao;
 import com.universitylecture.universitylecture.pojo.Lecture;
 import com.universitylecture.universitylecture.pojo.LecturePublisher;
+import com.universitylecture.universitylecture.pojo.MyLecture;
 import com.universitylecture.universitylecture.pojo.User;
 import com.universitylecture.universitylecture.util.DBUtil;
+import com.universitylecture.universitylecture.util.MD5Util;
 
 public class LectureDaoImpl implements LectureDao{
 
@@ -281,6 +283,49 @@ public class LectureDaoImpl implements LectureDao{
 		
 		return null;	
 		
+	}
+
+	@Override
+	public MyLecture insertMyLecture(String userID, String lectureID) {
+		
+		String sql = "insert into user_lecture(user_id,lecture_id)  values (?,?)";
+		
+		//实例化数据库连接工具，获得连接，准备PreparedStatement和结果集
+		DBUtil util = new DBUtil();
+		Connection conn = util.openConnection();
+		PreparedStatement ps = null;
+		
+		try {
+			
+			//获得prepareStatement
+			ps = conn.prepareStatement(sql);
+			
+			//设置查询参数
+			ps.setString(1, userID);
+			ps.setString(2, lectureID);
+			
+			int result = ps.executeUpdate();
+			
+			//判断用户是否存在
+			if(result == 1) {			
+				MyLecture myLecture = new MyLecture(userID,lectureID);
+				return myLecture;
+			}
+			
+		}  catch(SQLException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if(ps != null) {
+					ps.close();
+					ps = null;
+				}
+			} catch(SQLException e) {
+				e.printStackTrace();
+			}
+			util.closeConnection(conn);
+		}
+		return null;
 	}
 
 }
